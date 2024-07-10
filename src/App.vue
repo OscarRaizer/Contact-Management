@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderApp from './components/HeaderApp.vue'
+import contactList from './components/ContactList.vue'
 </script>
 <template>
-    <hello-world />
+    <div>
+        <header-app />
+        <div class="flex justify-center items-center">
+            <contact-list />
+        </div>
+    </div>
 </template>
 
 <style></style>
