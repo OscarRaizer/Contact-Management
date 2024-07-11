@@ -25,7 +25,7 @@ const handleDeleteContact = (id: number) => {
 
 <template>
     <div
-        class="flex gap-5 items-center justify-center p-6 overflow-clip flex-wrap"
+        class="flex gap-5 items-center justify-center overflow-clip flex-wrap px-4"
     >
         <ContactItem
             v-for="item in items"
@@ -39,5 +39,3 @@ const handleDeleteContact = (id: number) => {
         />
     </div>
 </template>
-
-<style scoped></style>

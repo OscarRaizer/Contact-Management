@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import HeaderApp from './components/HeaderApp.vue'
 import ContactList from './components/ContactList.vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
+import SearchBar from './components/SearchBar.vue'
 
 interface Contact {
     id: number
@@ -12,6 +13,15 @@ interface Contact {
 }
 
 const items = ref<Contact[]>([])
+const searchQuery = ref('')
+
+const filteredItems = computed(() =>
+    items.value.filter(
+        (item) =>
+            !searchQuery.value ||
+            item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+)
 
 onMounted(async () => {
     try {
@@ -37,15 +47,14 @@ const deleteItem = (id: number) => {
 </script>
 <template>
     <div>
-        <header-app />
+        <HeaderApp />
+        <SearchBar v-model="searchQuery" />
         <div class="flex justify-center items-center">
             <ContactList
-                :items="items"
+                :items="filteredItems"
                 @update:item="updateItem"
                 @delete:item="deleteItem"
             />
         </div>
     </div>
 </template>
-
-<style></style>

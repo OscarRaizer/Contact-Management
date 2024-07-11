@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import axios from 'axios'
+import { reactive } from 'vue'
 
 const props = defineProps<{
     id: number
@@ -11,24 +11,20 @@ const props = defineProps<{
 
 const emit = defineEmits(['update:contact', 'delete:contact'])
 
-const localName = ref(props.name)
-const localMail = ref(props.mail)
-const localPhone = ref(props.phone)
+const localData = reactive({
+    name: props.name,
+    mail: props.mail,
+    phone: props.phone,
+})
 
 const saveContact = async () => {
-    const updatedContact = {
-        id: props.id,
-        name: localName.value,
-        mail: localMail.value,
-        phone: localPhone.value,
-    }
+    const updatedContact = { id: props.id, ...localData }
     try {
         await axios.patch(
             `https://04acd28634d9740e.mokky.dev/items/${props.id}`,
             updatedContact
         )
         emit('update:contact', updatedContact)
-        console.log('Contact updated:', updatedContact)
     } catch (error) {
         console.error('Error updating contact:', error)
     }
@@ -49,14 +45,14 @@ const deleteContact = async () => {
 
 <template>
     <div
-        class="bg-customYellow rounded-xl border-2 border-black flex items-center justify-center p-6 flex-col gap-5 min-w-60 hover:shadow-xl transition"
+        class="bg-customYellow rounded-xl border-2 border-black flex items-center justify-center p-6 flex-col gap-5 min-w-60 hover:shadow-2xl transition"
     >
         <form @submit.prevent="saveContact" class="flex flex-col gap-5 w-full">
             <div class="flex justify-between items-center">
                 <label for="name" class="text-2xl">Name:</label>
                 <input
                     id="name"
-                    v-model="localName"
+                    v-model="localData.name"
                     class="bg-customYellow text-xl border-b border-black ml-3"
                     type="text"
                     required
@@ -66,7 +62,7 @@ const deleteContact = async () => {
                 <label for="mail" class="text-2xl">Email:</label>
                 <input
                     id="mail"
-                    v-model="localMail"
+                    v-model="localData.mail"
                     class="bg-customYellow text-xl border-b border-black"
                     type="email"
                     required
@@ -76,7 +72,7 @@ const deleteContact = async () => {
                 <label for="phone" class="text-2xl">Phone:</label>
                 <input
                     id="phone"
-                    v-model="localPhone"
+                    v-model="localData.phone"
                     class="bg-customYellow text-xl border-b border-black"
                     type="tel"
                     required

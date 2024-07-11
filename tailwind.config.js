@@ -8,6 +8,8 @@ module.exports = {
                 customWhite: '#FFDFC7',
                 customGreen: '#71B99C',
                 customRed: '#BB471A',
+                customBlue: '#4280EC',
+                customLightBlue: '#C6E0D5',
             },
         },
     },
