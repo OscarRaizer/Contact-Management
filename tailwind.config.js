@@ -6,6 +6,7 @@ module.exports = {
             colors: {
                 customYellow: '#E6BD56',
                 customWhite: '#FFDFC7',
+                customGreen: '#71B99C',
             },
         },
     },
