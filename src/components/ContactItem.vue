@@ -1,67 +1,89 @@
 <script lang="ts" setup>
-defineProps({
-    id: Number,
-    name: String,
-    mail: String,
-    phone: Number,
-})
+import { ref } from 'vue'
+import axios from 'axios'
+
+const props = defineProps<{
+    id: number
+    name: string
+    mail: string
+    phone: number
+}>()
+
+const emit = defineEmits(['update:contact'])
+
+const localName = ref(props.name)
+const localMail = ref(props.mail)
+const localPhone = ref(props.phone)
+
+const saveContact = async () => {
+    const updatedContact = {
+        id: props.id,
+        name: localName.value,
+        mail: localMail.value,
+        phone: localPhone.value,
+    }
+    try {
+        await axios.patch(
+            `https://04acd28634d9740e.mokky.dev/items/${props.id}`,
+            updatedContact
+        )
+        emit('update:contact', updatedContact)
+        console.log('Contact updated:', updatedContact)
+    } catch (error) {
+        console.error('Error updating contact:', error)
+    }
+}
 </script>
 
 <template>
     <div
-        class="bg-customYellow rounded-xl border-2 border-black flex items-center justify-center p-8 flex-col gap-5 min-w-80"
+        class="bg-customYellow rounded-xl border-2 border-black flex items-center justify-center p-6 flex-col gap-5 min-w-60 hover:shadow-xl transition"
     >
-        <ul class="flex flex-col gap-3 w-full">
-            <li class="flex justify-between items-center">
-                <span class="text-2xl">Name:</span>
-                <span class="text-xl">{{ name }}</span>
-            </li>
-            <li class="flex justify-between items-center gap-3">
-                <span class="text-2xl">Mail:</span>
-                <span class="text-xl">{{ mail }}</span>
-            </li>
-            <li class="flex justify-between items-center">
-                <span class="text-2xl">Phone:</span>
-                <span class="text-xl">{{ phone }}</span>
-            </li>
-        </ul>
-        <div class="flex justify-between w-full">
-            <button class="text-2xl bg-customGreen px-6 py-3 rounded-xl">
-                Edit
-            </button>
-            <button class="text-2xl bg-customGreen px-6 py-3 rounded-xl">
-                Delete
-            </button>
-        </div>
-
-        <!--        <form @submit.prevent="addContact" class="flex flex-col gap-5">-->
-        <!--            <input-->
-        <!--                class="bg-customYellow text-xl placeholder-black"-->
-        <!--                v-model="name"-->
-        <!--                type="text"-->
-        <!--                placeholder="Name"-->
-        <!--                required-->
-        <!--            />-->
-        <!--            <input-->
-        <!--                class="bg-customYellow text-xl placeholder-black"-->
-        <!--                v-model="phone"-->
-        <!--                type="tel"-->
-        <!--                placeholder="Phone"-->
-        <!--                required-->
-        <!--            />-->
-        <!--            <input-->
-        <!--                class="bg-customYellow text-xl placeholder-black"-->
-        <!--                v-model="email"-->
-        <!--                type="email"-->
-        <!--                placeholder="Email"-->
-        <!--                required-->
-        <!--            />-->
-        <!--            <div class="flex justify-between">-->
-        <!--                <button type="submit">Edit Contact</button>-->
-        <!--                <button type="submit">Delete Contact</button>-->
-        <!--            </div>-->
-        <!--        </form>-->
+        <form @submit.prevent="saveContact" class="flex flex-col gap-5 w-full">
+            <div class="flex justify-between items-center">
+                <label for="name" class="text-2xl">Name:</label>
+                <input
+                    id="name"
+                    v-model="localName"
+                    class="bg-customYellow text-xl border-b border-black ml-3"
+                    type="text"
+                    required
+                />
+            </div>
+            <div class="flex justify-between items-center">
+                <label for="mail" class="text-2xl">Email:</label>
+                <input
+                    id="mail"
+                    v-model="localMail"
+                    class="bg-customYellow text-xl border-b border-black"
+                    type="email"
+                    required
+                />
+            </div>
+            <div class="flex justify-between items-center">
+                <label for="phone" class="text-2xl">Phone:</label>
+                <input
+                    id="phone"
+                    v-model="localPhone"
+                    class="bg-customYellow text-xl border-b border-black"
+                    type="tel"
+                    required
+                />
+            </div>
+            <div class="flex justify-between w-full mt-5">
+                <button
+                    type="submit"
+                    class="text-2xl bg-customGreen px-6 py-3 rounded-xl hover:scale-105 transition active:bg-lime-700 disabled:bg-slate-400"
+                >
+                    Save
+                </button>
+                <button
+                    type="button"
+                    class="text-2xl bg-customRed px-6 py-3 rounded-xl text-customWhite hover:scale-105 transition active:bg-lime-700 disabled:bg-slate-400"
+                >
+                    Delete
+                </button>
+            </div>
+        </form>
     </div>
 </template>
-
-<style scoped></style>
