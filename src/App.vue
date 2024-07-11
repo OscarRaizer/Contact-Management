@@ -62,9 +62,11 @@ onMounted(() => {
 })
 </script>
 <template>
-    <div>
+    <div class="flex flex-col justify-center">
         <HeaderApp />
-        <div class="flex flex-row justify-between items-end mb-20 px-28 wrap">
+        <div
+            class="flex flex-row justify-between items-end mb-20 px-1 sm:px-28 gap-5 flex-wrap"
+        >
             <SearchBar v-model="searchQuery" />
             <AddNewContact @new-contact-added="fetchContacts" />
         </div>

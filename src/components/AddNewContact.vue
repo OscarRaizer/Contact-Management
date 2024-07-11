@@ -30,7 +30,7 @@ const emit = defineEmits<{
 
 <template>
     <form
-        class="flex flex-row justify-center items-center gap-5 h-full"
+        class="flex flex-row justify-center items-center gap-5 h-full flex-wrap"
         @submit.prevent="addNewContact"
     >
         <div class="flex flex-col justify-between items-center gap-4">
@@ -65,7 +65,7 @@ const emit = defineEmits<{
         </div>
         <button
             type="submit"
-            class="text-xl bg-customGreen rounded-xl hover:scale-105 transition px-5 active:bg-lime-700 disabled:bg-slate-400 self-stretch"
+            class="text-xl bg-customGreen rounded-xl hover:scale-105 transition px-5 active:bg-lime-700 disabled:bg-slate-400 self-stretch p-5"
         >
             Add
         </button>

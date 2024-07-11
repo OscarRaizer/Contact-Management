@@ -9,7 +9,6 @@ module.exports = {
                 customGreen: '#71B99C',
                 customRed: '#BB471A',
                 customBlue: '#4280EC',
-                customLightBlue: '#C6E0D5',
             },
         },
     },

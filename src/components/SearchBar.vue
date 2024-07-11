@@ -31,7 +31,7 @@ watch(
         <input
             :value="searchQuery"
             @input="handleInput"
-            class="rounded-md focus:outline outline-black px-4 py-2 bg-customLightBlue text-black text-2xl"
+            class="w-full sm:w-auto rounded-md focus:outline outline-black px-4 py-2 bg-customWhite text-black text-2xl"
             type="text"
             placeholder="Search..."
         />
