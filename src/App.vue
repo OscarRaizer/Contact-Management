@@ -24,29 +24,42 @@ const filteredItems = computed(() =>
     )
 )
 
+const saveContactsToLocalStorage = () => {
+    localStorage.setItem('contacts', JSON.stringify(items.value))
+}
+
 const fetchContacts = async () => {
     try {
         const { data } = await axios.get<Contact[]>(
             'https://04acd28634d9740e.mokky.dev/items'
         )
         items.value = data
+        saveContactsToLocalStorage()
     } catch (err) {
         console.log(err)
     }
 }
 
-onMounted(fetchContacts)
-
 const updateItem = (updatedItem: Contact) => {
     const index = items.value.findIndex((item) => item.id === updatedItem.id)
     if (index !== -1) {
         items.value.splice(index, 1, updatedItem)
+        saveContactsToLocalStorage()
     }
 }
 
 const deleteItem = (id: number) => {
     items.value = items.value.filter((item) => item.id !== id)
+    saveContactsToLocalStorage()
 }
+
+onMounted(() => {
+    fetchContacts()
+    const savedContacts = localStorage.getItem('contacts')
+    if (savedContacts) {
+        items.value = JSON.parse(savedContacts)
+    }
+})
 </script>
 <template>
     <div>
