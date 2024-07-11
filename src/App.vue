@@ -4,6 +4,7 @@ import ContactList from './components/ContactList.vue'
 import { computed, onMounted, ref } from 'vue'
 import axios from 'axios'
 import SearchBar from './components/SearchBar.vue'
+import AddNewContact from './components/AddNewContact.vue'
 
 interface Contact {
     id: number
@@ -23,7 +24,7 @@ const filteredItems = computed(() =>
     )
 )
 
-onMounted(async () => {
+const fetchContacts = async () => {
     try {
         const { data } = await axios.get<Contact[]>(
             'https://04acd28634d9740e.mokky.dev/items'
@@ -32,7 +33,9 @@ onMounted(async () => {
     } catch (err) {
         console.log(err)
     }
-})
+}
+
+onMounted(fetchContacts)
 
 const updateItem = (updatedItem: Contact) => {
     const index = items.value.findIndex((item) => item.id === updatedItem.id)
@@ -48,7 +51,11 @@ const deleteItem = (id: number) => {
 <template>
     <div>
         <HeaderApp />
-        <SearchBar v-model="searchQuery" />
+        <div class="flex flex-row justify-between items-end mb-20 px-28 wrap">
+            <SearchBar v-model="searchQuery" />
+            <AddNewContact @new-contact-added="fetchContacts" />
+        </div>
+
         <div class="flex justify-center items-center">
             <ContactList
                 :items="filteredItems"

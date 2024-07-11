@@ -27,7 +27,7 @@ watch(
 </script>
 
 <template>
-    <div class="flex justify-center align-center mb-14">
+    <div class="flex justify-center align-center">
         <input
             :value="searchQuery"
             @input="handleInput"

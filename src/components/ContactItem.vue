@@ -45,7 +45,7 @@ const deleteContact = async () => {
 
 <template>
     <div
-        class="bg-customYellow rounded-xl border-2 border-black flex items-center justify-center p-6 flex-col gap-5 min-w-60 hover:shadow-2xl transition"
+        class="bg-customYellow rounded-xl border-2 border-black flex items-center justify-center p-6 flex-col gap-5 hover:shadow-2xl transition"
     >
         <form @submit.prevent="saveContact" class="flex flex-col gap-5 w-full">
             <div class="flex justify-between items-center">
@@ -53,7 +53,7 @@ const deleteContact = async () => {
                 <input
                     id="name"
                     v-model="localData.name"
-                    class="bg-customYellow text-xl border-b border-black ml-3"
+                    class="bg-customYellow text-xl border-b border-black outline-none ml-3"
                     type="text"
                     required
                 />
@@ -63,7 +63,7 @@ const deleteContact = async () => {
                 <input
                     id="mail"
                     v-model="localData.mail"
-                    class="bg-customYellow text-xl border-b border-black"
+                    class="bg-customYellow text-xl border-b border-black outline-none"
                     type="email"
                     required
                 />
@@ -73,7 +73,7 @@ const deleteContact = async () => {
                 <input
                     id="phone"
                     v-model="localData.phone"
-                    class="bg-customYellow text-xl border-b border-black"
+                    class="bg-customYellow text-xl border-b border-black outline-none"
                     type="tel"
                     required
                 />
