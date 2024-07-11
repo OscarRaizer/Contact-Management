@@ -9,7 +9,7 @@ const props = defineProps<{
     phone: number
 }>()
 
-const emit = defineEmits(['update:contact'])
+const emit = defineEmits(['update:contact', 'delete:contact'])
 
 const localName = ref(props.name)
 const localMail = ref(props.mail)
@@ -31,6 +31,18 @@ const saveContact = async () => {
         console.log('Contact updated:', updatedContact)
     } catch (error) {
         console.error('Error updating contact:', error)
+    }
+}
+
+const deleteContact = async () => {
+    try {
+        await axios.delete(
+            `https://04acd28634d9740e.mokky.dev/items/${props.id}`
+        )
+        emit('delete:contact', props.id)
+        console.log('Contact deleted:', props.id)
+    } catch (error) {
+        console.error('Error deleting contact:', error)
     }
 }
 </script>
@@ -79,6 +91,7 @@ const saveContact = async () => {
                 </button>
                 <button
                     type="button"
+                    @click="deleteContact"
                     class="text-2xl bg-customRed px-6 py-3 rounded-xl text-customWhite hover:scale-105 transition active:bg-lime-700 disabled:bg-slate-400"
                 >
                     Delete

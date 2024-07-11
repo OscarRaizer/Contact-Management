@@ -12,10 +12,14 @@ defineProps<{
     items: Contact[]
 }>()
 
-const emit = defineEmits(['update:item'])
+const emit = defineEmits(['update:item', 'delete:item'])
 
 const handleUpdateContact = (updatedContact: Contact) => {
     emit('update:item', updatedContact)
+}
+
+const handleDeleteContact = (id: number) => {
+    emit('delete:item', id)
 }
 </script>
 
@@ -31,6 +35,7 @@ const handleUpdateContact = (updatedContact: Contact) => {
             :mail="item.mail"
             :phone="item.phone"
             @update:contact="handleUpdateContact"
+            @delete:contact="handleDeleteContact"
         />
     </div>
 </template>

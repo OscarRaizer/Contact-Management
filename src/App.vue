@@ -30,12 +30,20 @@ const updateItem = (updatedItem: Contact) => {
         items.value.splice(index, 1, updatedItem)
     }
 }
+
+const deleteItem = (id: number) => {
+    items.value = items.value.filter((item) => item.id !== id)
+}
 </script>
 <template>
     <div>
         <header-app />
         <div class="flex justify-center items-center">
-            <ContactList :items="items" @update:item="updateItem" />
+            <ContactList
+                :items="items"
+                @update:item="updateItem"
+                @delete:item="deleteItem"
+            />
         </div>
     </div>
 </template>
